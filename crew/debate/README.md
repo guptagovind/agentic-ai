@@ -1,52 +1,40 @@
-# Debate Crew
+# debate
 
-CrewAI project: class **`Debate`** in `src/debate/crew.py` loads **`config/agents.yaml`** and **`config/tasks.yaml`**, runs **`Process.sequential`**.
+CrewAI crew: **`Debate`** in `src/debate/crew.py` loads **`config/agents.yaml`** and **`config/tasks.yaml`**, runs **`Process.sequential`** (no explicit `tracing=` in code).
 
-## What the code does
+## What it does
 
-| Piece | Behavior |
-|--------|-----------|
-| **`Debate` crew** | Agents: `debater`, `judge`. Tasks (in order): `propose` → `oppose` → `decide`. |
-| **`agents.yaml`** | Both agents use `openai/gpt-4o-mini`. Role/goal/backstory reference `{motion}`. |
-| **`tasks.yaml`** | Task outputs: `output/propose.md`, `output/oppose.md`, `output/decide.md`. |
-| **`main.py`** | Defines only **`run()`**. Builds `inputs = {"motion": "There needs to be strict laws to regulate LLMs"}` and calls `Debate().crew().kickoff(inputs=inputs)`. Imports `datetime` but does not use it. |
-| **`tools/custom_tool.py`** | Example `MyCustomTool`; **not** referenced in `crew.py` (no tools on agents). |
-| **`knowledge/user_preference.txt`** | Sample text only; **not** wired into the crew in code. |
+| Piece | Details |
+|--------|--------|
+| **Agents** | `debater`, `judge`. **`openai/gpt-4o-mini`** in YAML. **`{motion}`** in roles/goals/tasks. |
+| **Tasks** | `propose` → `oppose` → `decide`; files **`output/propose.md`**, **`oppose.md`**, **`decide.md`**. |
+| **main.py** | **`run()`** only: `inputs = {"motion": "..."}`, `kickoff` inside `try`/`except`. Imports **`sys`** and **`datetime`**; **`datetime` is unused**. |
+| **tools/** | **`custom_tool.py`** scaffold; **not** used in `crew.py`. |
+| **knowledge/** | **`user_preference.txt`**; **not** wired in `crew.py` or YAML. |
 
-## Prerequisites
+## Requirements
 
-- Python `>=3.10,<3.14` (`pyproject.toml`)
-- Dependency: `crewai[tools]==1.10.1`
+- Python **>=3.10,<3.14**
+- **`crewai[tools]==1.10.1`**
+- **`.env`**: **`OPENAI_API_KEY`** (and any keys your agents need).
 
-## Setup
+## Setup & run
 
-Run from **`crew/debate/`** (where this `pyproject.toml` lives):
+From **`crew/debate/`**:
 
 ```bash
 cd crew/debate
 uv sync
-# or: crewai install
-```
-
-Set `OPENAI_API_KEY` in `.env` (or use your environment).
-
-## Run
-
-```bash
 crewai run
 ```
 
-Equivalent: `uv run run_crew` or `uv run debate` (both call `debate.main:run`).
+Change the motion in **`src/debate/main.py`** (`inputs` in **`run()`**).
 
-## Changing the motion
+## pyproject scripts
 
-Edit the `inputs` dict inside **`run()`** in `src/debate/main.py`. That is the only kickoff input the YAML expects (`{motion}`).
+**`train`**, **`replay`**, **`test`**, **`run_with_trigger`** are listed but **`main.py` only defines `run()`** — add those functions before using `crewai train` / etc.
 
-## `pyproject.toml` vs `main.py`
+## References
 
-`[project.scripts]` also defines **`train`**, **`replay`**, **`test`**, and **`run_with_trigger`** pointing at `debate.main`. Those functions **are not defined** in `src/debate/main.py` right now, so commands like `uv run train` or `crewai train` will fail until you add matching functions to `main.py`.
-
-## Support
-
-- [CrewAI documentation](https://docs.crewai.com)
-- [CrewAI on GitHub](https://github.com/joaomdmoura/crewai)
+- [CrewAI docs](https://docs.crewai.com)
+- Assistant-oriented notes: **`AGENTS.md`**
