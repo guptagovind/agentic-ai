@@ -1,0 +1,5 @@
+Sample knowledge text from the CrewAI template.
+This file is not referenced by src/debate/crew.py or the YAML configs in this project.
+To use it, wire a CrewAI knowledge source to agents or the crew in code per the docs.
+
+The default debate motion in main.py run() is: strict laws to regulate LLMs.
