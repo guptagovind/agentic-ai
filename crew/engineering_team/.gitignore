@@ -1,0 +1,20 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+# Local env (if `uv sync` / venv is created inside this package)
+.venv/
+venv/
+
+
+
+# Crew / tooling logs
+*.log
+logs.txt
+
+# Tests & linters (if added later)
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
