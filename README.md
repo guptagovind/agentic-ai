@@ -1,6 +1,6 @@
 # agentic-ai
 
-Workspace for **agentic AI** coursework and experiments—primarily self-contained [CrewAI](https://crewai.com) crews under `crew/`, plus a workspace-level Python environment for broader course dependencies.
+Workspace for **agentic AI** projects and research self-contained [CrewAI](https://crewai.com) crews under `crew/`, plus a workspace-level Python environment for broader course dependencies.
 
 The workspace `pyproject.toml` bundles libraries used across the Udemy Agentic AI Engineering-style material ([OpenAI Agents](https://openai.github.io/openai-agents-python/), CrewAI, LangGraph, LangChain, AutoGen, MCP, and related tooling). **`crew/` projects each ship their own `pyproject.toml` and `uv.lock`**; treat them as the canonical place to install and run a specific demo.
 
